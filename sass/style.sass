@@ -1,0 +1,257 @@
+// ====================
+//      COLORS
+// ==============================
+$c_red: #ee4266
+$c_yellow: #fcd307
+$c_blue: #1c1259
+$c_violet: #d5daeb
+
+$c_black: #333
+$c_white: #DDD
+
+// ====================
+//      SIZE
+// ==============================
+
+// ====================
+//      TEXT
+// ==============================
+
+// ====================
+//      MIXIN
+// ==============================
+= center_position
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+= center_flex($j: center, $a: center)
+  display: flex
+  justify-content: $j
+  align-items: $a
+  
+= size($w, $h: $w, $bdrs: 0)
+  width: $w
+  height: $h
+  border-radius: $bdrs
+
+= box_shadow($c: rgba(black, 0.2))
+  box-shadow: 0px 5px 25px 5px $c
+  
+// ====================
+//      DEBUG
+// ==============================
+*
+  // border: 1px solid white
+  
+// ====================
+//      ALL
+// ==============================
+*
+  font-family: 'Ubuntu', Noto Sans TC
+  letter-spacing: 1.5px
+  line-height: 150%
+  position: relative
+  outline: none
+  user-select: none
+html, body
+  +size(100%)
+  min-height: 100vh
+  margin: 0
+h1, h2, h3, h4, h5, h6, hr, p, ul, li, label, span
+  margin: 0
+  padding: 0
+  list-style: none
+
+// ====================
+//      BODY
+// ==============================
+#theater
+  +size(100%)
+  background-color: rgba(black, 0.9)
+  +center_flex
+  flex-direction: column
+  overflow: hidden
+  h1
+    font-size: 30px
+    color: $c_violet
+    position: fixed
+    top: 5%
+    left: 5%
+  .movie_box
+    +size(100%)
+    +center_flex
+    .movies
+      +size(100%)
+      left: 0
+      +center_flex(flex-start)
+      transition: left 0s, transform 0.8s
+      &.cart_mode
+        transform: scale(0.8)
+      .movie
+        +size(500px, auto, 10px)
+        margin: 60px
+        background-color: $c_violet
+        +center_flex
+        flex-shrink: 0
+        +box_shadow(rgba(black, 0.5))
+        cursor: pointer
+        transition: 0.5s
+        &:hover
+          transform: translate(0, -10px)
+          .cover_box
+            .cover
+              transform: translate(0, -20px)
+              +box_shadow(rgba(black, 0.5))
+        .cover_box
+          flex: 1
+          .cover
+            +size(180px, 240px, 10px 0 0 10px)
+            +box_shadow
+            transition: 0.5s
+        .infomation_box
+          flex: 2
+          padding: 20px
+          +center_flex(center, flex-start)
+          flex-direction: column
+          h2
+            margin: 10px 0 5px 0
+            font-size: 23px
+            font-weight: 700
+            color: $c_blue
+          h4
+            font-size: 15px
+            color: rgba($c_blue, 0.3)
+          p
+            margin: 20px 0
+            text-align: justify
+            font-size: 13px
+            color: rgba($c_blue, 0.7)
+          .price
+            margin: 0 30px 0 0
+            color: $c_blue
+          .btn_add_cart
+            padding: 4px 12px
+            border: 0
+            border-radius: 50px
+            // 只要 border-radius 給的值大於寬高的話，便會變成圓角
+            background-color: $c_blue
+            font-size: 12px
+            color: $c_white
+            position: absolute
+            right: 5%
+            bottom: 5%
+            +box_shadow
+            cursor: pointer
+            transition: 0.3s
+            &:hover
+              background-color: $c_yellow
+              color: $c_blue
+  .purchasing_box
+    +size(50px, 80px)
+    background-color: #fff
+    position: fixed
+    top: 6%
+    right: 6%
+    opacity: 0
+  .cart_box
+    position: fixed
+    top: 6%
+    right: 6%
+    z-index: 50
+    +center_flex
+    opacity: 0.5
+    cursor: pointer
+    transition: 0.3s
+    &:hover
+      opacity: 1
+    i
+      margin: 0 10px 0 0
+      font-size: 20px
+      color: $c_violet
+    span
+      font-size: 15px
+      color: $c_violet
+  .cart_interface
+    +size(100%)
+    padding: 10vw 0 15vw 0
+    background-image: linear-gradient(10deg, rgba(black, 0.9) 0%, rgba(black, 0.85) 50%, transparent 100%)
+    +center_position
+    +center_flex(center, flex-start)
+    opacity: 0
+    overflow: scroll
+    pointer-events: none
+    // 用 pointer-events 就不需要去計算 z-index 了
+    transition: 0.5s
+    &.opened
+      opacity: 1
+      pointer-events: initial
+    .panel
+      width: 70%
+      +center_flex
+      flex-direction: column
+      h2
+        margin: 20px 0
+        color: $c_violet
+      ul
+        width: 100%
+        min-width: 500px
+        li
+          padding: 15px 0
+          border-bottom: 1px solid rgba($c_white, 0.4)
+          +center_flex(flex-start)
+          cursor: pointer
+          transition: 0.3s
+          &:hover
+            background-color: rgba($c_white, 0.2)
+            transform: translate(-5px, 0)
+          .thumbnail
+            +size(50px, 70px)
+            margin: 0 40px 0 20px 
+          h3
+            font-size: 20px
+            color: $c_violet
+          .price
+            font-size: 15px
+            color: rgba($c_violet, 0.7)
+            position: absolute
+            right: 15%
+          .btn_remove_cart
+            +size(25px, 25px, 50%)
+            border: 0
+            background-color: rgba($c_violet, 0.3)
+            position: absolute
+            right: 5%
+            cursor: pointer
+            transition: 0.3s
+            &:hover
+              background-color: $c_red
+            i
+              font-size: 12px
+              color: $c_violet
+              +center_position
+              top: 35%
+      hr
+        +size(100%, 2px)
+        min-width: 500px
+        background-color: $c_violet
+      .total_box
+        width: 100%
+        min-width: 500px
+        padding: 3vw 5vw
+        +center_flex(space-between)
+        h3, .total
+          font-size: 20px
+          font-weight: 500
+          color: $c_violet
+        .total
+          color: $c_red
+          
+// ====================
+//      RWD
+// ==============================
+
+// ====================
+//      KEYFRAMES
+// ==============================

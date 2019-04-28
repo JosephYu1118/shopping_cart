@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>shopping_cart_josephyu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900&amp;subset=chinese-traditional,japanese'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i&amp;subset=latin-ext'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  
+<!-- ====================-->
+<!--      BODY-->
+<!-- ==============================-->
+<div id="theater">
+  <h1>Joseph's Theater</h1>
+  <div class="movie_box" @wheel.prevent="wheel($event)">
+    <ul class="movies" :class="{cart_mode: is_cart_open}">
+      <li class="movie" v-for="(movie, id) in movies">
+        <div class="cover_box">
+          <div class="cover" :style="getCssBackground(movie.cover)"></div>
+        </div>
+        <div class="infomation_box">
+          <h2>{{movie.name}}</h2>
+          <h4>{{movie.type}}</h4>
+          <p v-html="movie.description"></p>
+          <div class="price">NT$ {{movie.price}}</div>
+          <button class="btn_add_cart" @click="addCart(movie, $event)">+ Add to my cart</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="purchasing_box" :style="getCssBackground(current_movie.cover)" v-if="current_movie"></div>
+  <div class="cart_box" @click="is_cart_open = !is_cart_open"><i class="fas fa-shopping-cart"></i><span>{{cart.length}}</span></div>
+  <div class="cart_interface" :class="{opened: is_cart_open}">
+    <div class="panel">
+      <h2>My Movie Cart</h2>
+      <ul>
+        <li v-for="(movie, id) in cart">
+          <div class="thumbnail" :style="getCssBackground(movie.cover)"></div>
+          <h3>{{movie.name}}</h3>
+          <div class="price">NT$ {{movie.price}}</div>
+          <button class="btn_remove_cart" @click="cart.splice(id, 1)"><i class="far fa-window-minimize"></i></button>
+        </li>
+        <li v-if="!cart.length">
+          <h3>Your cart is empty!</h3>
+        </li>
+      </ul>
+      <hr/>
+      <div class="total_box">
+        <h3>Total:</h3>
+        <div class="total">NT$ {{total}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.5/scrollreveal.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

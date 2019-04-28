@@ -1,0 +1,38 @@
+// ====================
+//      BODY
+// ==============================
+#theater
+  h1 Joseph's Theater
+  .movie_box(@wheel.prevent="wheel($event)")
+    //- 也可以寫成 (@wheel.prevent="wheel") ，因為 $event 是預設值
+    ul.movies(:class="{cart_mode: is_cart_open}")
+      li.movie(v-for="(movie, id) in movies")
+        .cover_box
+          .cover(:style="getCssBackground(movie.cover)")
+        .infomation_box
+          h2 {{movie.name}}
+          h4 {{movie.type}}
+          p(v-html="movie.description")
+          .price NT$ {{movie.price}}
+          button.btn_add_cart(@click="addCart(movie, $event)") + Add to my cart
+  .purchasing_box(:style="getCssBackground(current_movie.cover)" v-if="current_movie")
+  .cart_box(@click="is_cart_open = !is_cart_open")
+    i.fas.fa-shopping-cart
+    span {{cart.length}}
+  .cart_interface(:class="{opened: is_cart_open}")
+    .panel
+      h2 My Movie Cart
+      ul
+        li(v-for="(movie, id) in cart")
+          .thumbnail(:style="getCssBackground(movie.cover)")
+          h3 {{movie.name}}
+          .price NT$ {{movie.price}}
+          button.btn_remove_cart(@click="cart.splice(id, 1)")
+            i.far.fa-window-minimize
+        li(v-if="!cart.length")
+          //- 也可以寫成 li(v-if="cart.length == 0")
+          h3 Your cart is empty!
+      hr
+      .total_box
+        h3 Total:
+        .total NT$ {{total}}
